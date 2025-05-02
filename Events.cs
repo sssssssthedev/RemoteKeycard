@@ -69,7 +69,7 @@ public class Events : CustomEventsHandler
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingDoor(): Keycard in player inventory does not have permsision to open door (KeycardName: {keycard.Name}, DoorName: {doorBase.DoorName}, KeycardHasPermsForDoor: {Utils.KeycardHasPermissionForDoor(keycard, player, doorBase)})");
+                    Logger.Debug($"OnPlayerInteractingDoor(): Keycard in player inventory does not have permission to open door (KeycardName: {keycard.Name}, DoorName: {doorBase.DoorName}, KeycardHasPermsForDoor: {Utils.KeycardHasPermissionForDoor(keycard, player, doorBase)})");
                }
                return;
           }
@@ -182,7 +182,7 @@ public class Events : CustomEventsHandler
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingGenerator(): Keycard in player inventory does not have permsision to open generator (KeycardName: {keycard.Name}, GeneratorName: {generatorBase.name}, KeycardHasPermsForDoor: {Utils.KeycardHasPermissionForGenerator(keycard, player, generatorBase)})");
+                    Logger.Debug($"OnPlayerInteractingGenerator(): Keycard in player inventory does not have permission to open generator (KeycardName: {keycard.Name}, GeneratorName: {generatorBase.name}, KeycardHasPermsForDoor: {Utils.KeycardHasPermissionForGenerator(keycard, player, generatorBase)})");
                }
                return;
           }
