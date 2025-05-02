@@ -132,17 +132,17 @@ public class Events : CustomEventsHandler
                }
                return;
           }
-          // Checking if any of the keycards the player owns has permission to open the locker
+          // Checking if any of the keycards the player owns has permission to open the locker chamber
           if (!Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber))
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
                     var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
-                    Logger.Debug($"OnPlayerInteractingLocker(): Keycards in player inventory do not have permission to open locker (KeycardNames: [{keycardNames}], ChamberName: {chamber.Base.name}, KeycardHasPermsForLocker: {Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber)})");
+                    Logger.Debug($"OnPlayerInteractingLocker(): Keycards in player inventory do not have permission to open locker chamber (KeycardNames: [{keycardNames}], ChamberName: {chamber.Base.name}, KeycardHasPermsForLocker: {Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber)})");
                }
                return;
           }
-          // Finally, we trigger the toggle for the locker, and we cancel the event because we don't want to trigger it twice
+          // Finally, we trigger the toggle for the locker chamber, and we cancel the event because we don't want to trigger it twice
           Utils.TryToggleLocker(chamber, locker);
           args.IsAllowed = false;
      }
@@ -211,7 +211,7 @@ public class Events : CustomEventsHandler
                }
                return;
           }
-          // Finally, we trigger the unlock the generator, and we cancel the event because we don't want to trigger it twice
+          // Finally, we unlock the generator, and we cancel the event because we don't want to trigger it twice
           Utils.TryUnlockGenerator(generatorBase);
           args.IsAllowed = false;
      }
