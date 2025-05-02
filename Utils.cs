@@ -50,7 +50,7 @@ public class Utils
         if (keycards == null || locker == null || player == null)
             return false;
         
-        return keycards.Any(keycard => keycard.GetPermissions(player as IDoorPermissionRequester).HasFlagAny(locker.RequiredPermissions));
+        return keycards.Any(keycard => keycard.GetPermissions(player as IDoorPermissionRequester).HasFlagAll(locker.RequiredPermissions));
     }
     /***
      * Check if any keycard in a player inventory has permission to open the generator
@@ -60,7 +60,7 @@ public class Utils
         if (keycards == null || generator == null || player == null)
             return false;
         
-        return keycards.Any(keycard => keycard.GetPermissions(player as IDoorPermissionRequester).HasFlagAny(generator.RequiredPermissions));
+        return keycards.Any(keycard => keycard.GetPermissions(player as IDoorPermissionRequester).HasFlagAll(generator.RequiredPermissions));
     }
     /***
      * Attempts to toggle the door by setting the IsOpened flag
