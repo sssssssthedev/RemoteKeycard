@@ -63,7 +63,7 @@ public class Events : CustomEventsHandler
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug("OnPlayerInteractingDoor(): Keycards are null after trying to get them from the player's inventory (most likely means that either one or multiple were deleted after the PlayerHasKeycard check)");
+                    Logger.Debug("OnPlayerInteractingDoor(): Keycards are null after trying to get them from the player's inventory (most likely means that the player's inventory was cleared or the keycards got removed after the PlayerHasKeycard check)");
                }
                return;
           }
@@ -117,7 +117,7 @@ public class Events : CustomEventsHandler
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug("OnPlayerInteractingLocker(): Keycards are null after trying to get them from the player's inventory (most likely means that either one or multiple were deleted after the PlayerHasKeycard check)");
+                    Logger.Debug("OnPlayerInteractingLocker(): Keycards are null after trying to get them from the player's inventory (most likely means that the player's inventory was cleared or the keycards got removed after the PlayerHasKeycard check)");
                }
                return;
           }
@@ -178,7 +178,7 @@ public class Events : CustomEventsHandler
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug("OnPlayerInteractingGenerator(): Keycards are null after trying to get them from the player's inventory (most likely means that either one or multiple were deleted after the PlayerHasKeycard check)");
+                    Logger.Debug("OnPlayerInteractingGenerator(): Keycards are null after trying to get them from the player's inventory (most likely means that the player's inventory was cleared or the keycards got removed after the PlayerHasKeycard check)");
                }
                return;
           }
