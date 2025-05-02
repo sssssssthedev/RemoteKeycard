@@ -1,4 +1,6 @@
-﻿using LabApi.Events.Arguments.PlayerEvents;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -56,20 +58,21 @@ public class Events : CustomEventsHandler
                }
                return;
           }
-          var keycard = Utils.GetPlayerKeycard(player);
-          if (keycard == null)
+          var keycards = Utils.GetPlayerKeycards(player);
+          if (keycards == null)
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug("OnPlayerInteractingDoor(): Keycard is null after trying to get it from the player's inventory (most likely means that it was deleted after the PlayerHasKeycard check)");
+                    Logger.Debug("OnPlayerInteractingDoor(): Keycards are null after trying to get them from the player's inventory (most likely means that either one or multiple were deleted after the PlayerHasKeycard check)");
                }
                return;
           }
-          if (!Utils.KeycardHasPermissionForDoor(keycard, player, doorBase))
-          { 
+          if (!Utils.AnyKeycardHasPermissionForDoor(keycards, player, doorBase))
+          {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingDoor(): Keycard in player inventory does not have permission to open door (KeycardName: {keycard.Name}, DoorName: {doorBase.DoorName}, KeycardHasPermsForDoor: {Utils.KeycardHasPermissionForDoor(keycard, player, doorBase)})");
+                    var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
+                    Logger.Debug($"OnPlayerInteractingDoor(): Keycards in player inventory do not have permission to open door (KeycardNames: [{keycardNames}], DoorName: {doorBase.DoorName}, KeycardHasPermsForDoor: {Utils.AnyKeycardHasPermissionForDoor(keycards, player, doorBase)})");
                }
                return;
           }
@@ -109,20 +112,21 @@ public class Events : CustomEventsHandler
                }
                return;
           }
-          var keycard = Utils.GetPlayerKeycard(player);
-          if (keycard == null)
+          var keycards = Utils.GetPlayerKeycards(player);
+          if (keycards == null)
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug("OnPlayerInteractingLocker(): Keycard is null after trying to get it from the player's inventory (most likely means that it was deleted after the PlayerHasKeycard check)");
+                    Logger.Debug("OnPlayerInteractingLocker(): Keycards are null after trying to get them from the player's inventory (most likely means that either one or multiple were deleted after the PlayerHasKeycard check)");
                }
                return;
           }
-          if (!Utils.KeycardHasPermissionForLocker(keycard, player, chamber))
+          if (!Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber))
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingLocker(): Keycard in player inventory does not have permsision to open locker chamber (KeycardName: {keycard.Name}, ChamberName: {chamber.Base.name}, KeycardHasPermsForLocker: {Utils.KeycardHasPermissionForLocker(keycard, player, chamber)})");
+                    var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
+                    Logger.Debug($"OnPlayerInteractingLocker(): Keycards in player inventory do not have permission to open locker (KeycardNames: [{keycardNames}], ChamberName: {chamber.Base.name}, KeycardHasPermsForLocker: {Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber)})");
                }
                return;
           }
@@ -169,20 +173,21 @@ public class Events : CustomEventsHandler
                }
                return;
           }
-          var keycard = Utils.GetPlayerKeycard(player);
-          if (keycard == null)
+          var keycards = Utils.GetPlayerKeycards(player);
+          if (keycards == null)
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug("OnPlayerInteractingGenerator(): Keycard is null after trying to get it from the player's inventory (most likely means that it was deleted after the PlayerHasKeycard check)");
+                    Logger.Debug("OnPlayerInteractingGenerator(): Keycards are null after trying to get them from the player's inventory (most likely means that either one or multiple were deleted after the PlayerHasKeycard check)");
                }
                return;
           }
-          if (!Utils.KeycardHasPermissionForGenerator(keycard, player, generatorBase))
+          if (!Utils.AnyKeycardHasPermissionForGenerator(keycards, player, generatorBase))
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingGenerator(): Keycard in player inventory does not have permission to open generator (KeycardName: {keycard.Name}, GeneratorName: {generatorBase.name}, KeycardHasPermsForGen: {Utils.KeycardHasPermissionForGenerator(keycard, player, generatorBase)})");
+                    var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
+                    Logger.Debug($"OnPlayerInteractingGenerator(): Keycards in player inventory do not have permission to open generator (KeycardNames: [{keycardNames}], GeneratorName: {generatorBase.name}, KeycardHasPermsForGen: {Utils.AnyKeycardHasPermissionForGenerator(keycards, player, generatorBase)})");
                }
                return;
           }
