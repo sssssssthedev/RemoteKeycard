@@ -59,5 +59,4 @@ public class Utils
         generator.ServerSetFlag(Scp079Generator.GeneratorFlags.Unlocked, true);
         generator._cooldownStopwatch.Restart();
     }
-
 }

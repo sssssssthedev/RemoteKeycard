@@ -24,6 +24,5 @@ public class Config
     {
         RoleTypeId.None
     };
-
 }
 
