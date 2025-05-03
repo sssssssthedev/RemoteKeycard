@@ -54,15 +54,15 @@ public class Events : CustomEventsHandler
                return;
           }
           // Checking if the player has any keycard in his inventory
-          if (!Utils.PlayerHasKeycard(player))
+          if (!player.HasKeycard())
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingDoor(): Player does not have a keycard in his inventory (HasKeycard: {Utils.PlayerHasKeycard(player)})");
+                    Logger.Debug($"OnPlayerInteractingDoor(): Player does not have a keycard in his inventory (HasKeycard: {player.HasKeycard()})");
                }
                return;
           }
-          var keycards = Utils.GetPlayerKeycards(player);
+          var keycards = player.GetKeycards();
           // Checking if a keycard or multiple keycards actually exist or not, good practice in cases where something wrong happens
           if (keycards == null)
           {
@@ -73,17 +73,17 @@ public class Events : CustomEventsHandler
                return;
           }
           // Checking if any of the keycards the player owns has permission to open the door
-          if (!Utils.AnyKeycardHasPermissionForDoor(keycards, player, doorBase))
+          if (!doorBase.AnyKeycardHasPermission(player, keycards))
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
                     var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
-                    Logger.Debug($"OnPlayerInteractingDoor(): Keycards in player inventory do not have permission to open door (KeycardNames: [{keycardNames}], DoorName: {doorBase.DoorName}, KeycardHasPermsForDoor: {Utils.AnyKeycardHasPermissionForDoor(keycards, player, doorBase)})");
+                    Logger.Debug($"OnPlayerInteractingDoor(): Keycards in player inventory do not have permission to open door (KeycardNames: [{keycardNames}], DoorName: {doorBase.DoorName}, KeycardHasPerms: {doorBase.AnyKeycardHasPermission(player, keycards)})");
                }
                return;
           }
           // Finally, we trigger the toggle for the door, and we cancel the event because we don't want to trigger it twice
-          Utils.TryToggleDoor(door);
+          door.TryToggle();
           args.IsAllowed = false;
      }
 
@@ -114,15 +114,15 @@ public class Events : CustomEventsHandler
                return;
           }
           // Checking if the player has any keycard in his inventory
-          if (!Utils.PlayerHasKeycard(player))
+          if (!player.HasKeycard())
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingLocker(): Player does not have a keycard in his inventory (HasKeycard: {Utils.PlayerHasKeycard(player)})");
+                    Logger.Debug($"OnPlayerInteractingLocker(): Player does not have a keycard in his inventory (HasKeycard: {player.HasKeycard()})");
                }
                return;
           }
-          var keycards = Utils.GetPlayerKeycards(player);
+          var keycards = player.GetKeycards();
           // Checking if a keycard or multiple keycards actually exist or not, good practice in cases where something wrong happens
           if (keycards == null)
           {
@@ -133,17 +133,17 @@ public class Events : CustomEventsHandler
                return;
           }
           // Checking if any of the keycards the player owns has permission to open the locker chamber
-          if (!Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber))
+          if (!chamber.AnyKeycardHasPermission(player, keycards))
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
                     var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
-                    Logger.Debug($"OnPlayerInteractingLocker(): Keycards in player inventory do not have permission to open locker chamber (KeycardNames: [{keycardNames}], ChamberName: {chamber.Base.name}, KeycardHasPermsForLocker: {Utils.AnyKeycardHasPermissionForLocker(keycards, player, chamber)})");
+                    Logger.Debug($"OnPlayerInteractingLocker(): Keycards in player inventory do not have permission to open locker chamber (KeycardNames: [{keycardNames}], ChamberName: {chamber.Base.name}, KeycardHasPerms: {chamber.AnyKeycardHasPermission(player, keycards)})");
                }
                return;
           }
           // Finally, we trigger the toggle for the locker chamber, and we cancel the event because we don't want to trigger it twice
-          Utils.TryToggleLocker(chamber, locker);
+          chamber.TryToggle(locker);
           args.IsAllowed = false;
      }
 
@@ -183,15 +183,15 @@ public class Events : CustomEventsHandler
                return;
           }
           // Checking if the player has any keycard in his inventory
-          if (!Utils.PlayerHasKeycard(player))
+          if (!player.HasKeycard())
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerInteractingGenerator(): Player does not have a keycard in his inventory (HasKeycard: {Utils.PlayerHasKeycard(player)})");
+                    Logger.Debug($"OnPlayerInteractingGenerator(): Player does not have a keycard in his inventory (HasKeycard: {player.HasKeycard()})");
                }
                return;
           }
-          var keycards = Utils.GetPlayerKeycards(player);
+          var keycards = player.GetKeycards();
           // Checking if a keycard or multiple keycards actually exist or not, good practice in cases where something wrong happens
           if (keycards == null)
           {
@@ -202,17 +202,75 @@ public class Events : CustomEventsHandler
                return;
           }
           // Checking if any of the keycards the player owns has permission to open the generator
-          if (!Utils.AnyKeycardHasPermissionForGenerator(keycards, player, generatorBase))
+          if (!generatorBase.AnyKeycardHasPermission(player, keycards))
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
                     var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
-                    Logger.Debug($"OnPlayerInteractingGenerator(): Keycards in player inventory do not have permission to open generator (KeycardNames: [{keycardNames}], GeneratorName: {generatorBase.name}, KeycardHasPermsForGen: {Utils.AnyKeycardHasPermissionForGenerator(keycards, player, generatorBase)})");
+                    Logger.Debug($"OnPlayerInteractingGenerator(): Keycards in player inventory do not have permission to open generator (KeycardNames: [{keycardNames}], GeneratorName: {generatorBase.name}, KeycardHasPerms: {generatorBase.AnyKeycardHasPermission(player, keycards)})");
                }
                return;
           }
           // Finally, we unlock the generator, and we cancel the event because we don't want to trigger it twice
-          Utils.TryUnlockGenerator(generatorBase);
+          generatorBase.TryUnlock();
+          args.IsAllowed = false;
+     }
+
+     public override void OnPlayerUnlockingWarheadButton(PlayerUnlockingWarheadButtonEventArgs args)
+     {
+          var player = args.Player;
+          var panel = new AlphaWarheadActivationPanel();
+          var blacklistedRoleFound = RemoteKeycard.Instance.Config.BlacklistedRoles.Contains(player.Role);
+          var amnesiaEnabled = RemoteKeycard.Instance.Config.AmnesiaAffectsKeycard; 
+          RemoteKeycard.Instance.Config.UseList.TryGetValue("Warhead", out var warheadEnabled);
+          // Checking if Amnesia is an enabled feature in the config and if the player actually has Amnesia
+          if (amnesiaEnabled && player.GetEffect<CustomPlayerEffects.AmnesiaItems>().IsEnabled)
+          {
+               if (RemoteKeycard.Instance.Config.Debug)
+               {
+                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Player is affected by amnesia and config has it enabled (AmnesiaEnabled: {amnesiaEnabled}, HasAmnesia: {player.GetEffect<CustomPlayerEffects.AmnesiaItems>().IsEnabled})");
+               }
+               return;
+          }
+          // Checking if Warhead is an enabled feature in the config or if the player is an SCP or if the player has no items or if the player has a blacklisted role or if the player's current item is a keycard
+          if (!warheadEnabled || player.IsSCP || player.IsWithoutItems || blacklistedRoleFound || player.CurrentItem is KeycardItem)
+          {
+               if (RemoteKeycard.Instance.Config.Debug)
+               {
+                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Warhead is disabled in config or player is SCP or player has no items or player's role is blacklisted player's or current item is a keycard (DoorEnabled: {warheadEnabled}, IsSCP: {player.IsSCP}, IsWithoutItems: {player.IsWithoutItems}, BlacklistedRole: {blacklistedRoleFound}, CurrentItem: {player.CurrentItem})");
+               }
+               return;
+          }
+          // Checking if the player has any keycard in his inventory
+          if (!player.HasKeycard())
+          {
+               if (RemoteKeycard.Instance.Config.Debug)
+               {
+                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Player does not have a keycard in his inventory (HasKeycard: {player.HasKeycard()})");
+               }
+               return;
+          }
+          var keycards = player.GetKeycards();
+          // Checking if a keycard or multiple keycards actually exist or not, good practice in cases where something wrong happens
+          if (keycards == null)
+          {
+               if (RemoteKeycard.Instance.Config.Debug)
+               {
+                    Logger.Debug("OnPlayerUnlockingWarheadButton(): Keycards are null after trying to get them from the player's inventory (most likely means that the player's inventory was cleared or the keycards got removed after the PlayerHasKeycard check)");
+               }
+               return;
+          }
+          // Checking if any of the keycards the player owns has permission to open the warhead
+          if (!panel.AnyKeycardHasPermission(player, keycards))
+          { 
+               if (RemoteKeycard.Instance.Config.Debug)
+               {
+                    var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
+                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Keycards in player inventory do not have permission to open warhead (KeycardNames: [{keycardNames}], PanelName: {panel.name}, KeycardHasPerms: {panel.AnyKeycardHasPermission(player, keycards)})");
+               }
+               return;
+          }
+          panel.TryUnlock();
           args.IsAllowed = false;
      }
 }

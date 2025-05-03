@@ -14,8 +14,9 @@ public class Config
     public Dictionary<string, bool> UseList { get; set; } = new()
     {
         { "Door", true },
-        { "Locker", true},
-        { "Generator", true}
+        { "Locker", true },
+        { "Generator", true },
+        { "Warhead", true }
     };
     [Description("Setting to enable/disable amnesia affecting the use of the remote keycard")]
     public bool AmnesiaAffectsKeycard { get; set; } = false;
