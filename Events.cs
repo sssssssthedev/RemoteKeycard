@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
-using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using MapGeneration.Distributors;
+using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
 
 namespace RemoteKeycardLabApi;
 
@@ -219,7 +220,8 @@ public class Events : CustomEventsHandler
      public override void OnPlayerUnlockingWarheadButton(PlayerUnlockingWarheadButtonEventArgs args)
      {
           var player = args.Player;
-          var panel = new AlphaWarheadActivationPanel();
+          var panelObject = new GameObject("AlphaWarheadActivationPanel");
+          var panel = panelObject.AddComponent<AlphaWarheadActivationPanel>();
           var blacklistedRoleFound = RemoteKeycard.Instance.Config.BlacklistedRoles.Contains(player.Role);
           var amnesiaEnabled = RemoteKeycard.Instance.Config.AmnesiaAffectsKeycard; 
           RemoteKeycard.Instance.Config.UseList.TryGetValue("Warhead", out var warheadEnabled);
