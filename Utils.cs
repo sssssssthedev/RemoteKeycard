@@ -95,13 +95,4 @@ public static class Utils
         generator.ServerSetFlag(Scp079Generator.GeneratorFlags.Unlocked, true);
         generator._cooldownStopwatch.Restart();
     }
-    /***
-     * Attempts to unlock the warhead on surface by setting the _unlocked bool
-     */
-    public static void TryUnlock(this AlphaWarheadActivationPanel panel)
-    {
-        if (panel == null)
-            return;
-        panel._unlocked = !panel._unlocked;
-    }
 }

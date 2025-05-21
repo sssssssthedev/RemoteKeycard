@@ -276,7 +276,6 @@ public class Events : CustomEventsHandler
                }
                return;
           }
-          existingPanel.TryUnlock();
-          args.IsAllowed = false;
+          args.IsAllowed = true;
      }
 }
