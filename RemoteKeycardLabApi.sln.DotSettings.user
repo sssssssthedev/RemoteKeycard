@@ -8,4 +8,5 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CReferences_005CUnityEngine_002EAudioModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CReferences_005CUnityEngine_002EClothModule_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CReferences_005CUnityEngine_002ECoreModule_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CReferences_005CUnityEngine_002Edll/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CReferences_005CUnityEngine_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003APlayerUnlockingWarheadButtonEventArgs_002Ecs_002Fl_003AC_0021_003FUsers_003Fsssssss_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fbea7f403b90e4786abd99fa819db98538f400_003F9a_003F2495effc_003FPlayerUnlockingWarheadButtonEventArgs_002Ecs/@EntryIndexedValue">ForceIncluded</s:String></wpf:ResourceDictionary>

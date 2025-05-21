@@ -3,6 +3,7 @@ using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
 using MapGeneration.Distributors;
+using Mirror;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -216,12 +217,9 @@ public class Events : CustomEventsHandler
           generatorBase.TryUnlock();
           args.IsAllowed = false;
      }
-
      public override void OnPlayerUnlockingWarheadButton(PlayerUnlockingWarheadButtonEventArgs args)
      {
           var player = args.Player;
-          var panelObject = new GameObject("AlphaWarheadActivationPanel");
-          var panel = panelObject.AddComponent<AlphaWarheadActivationPanel>();
           var blacklistedRoleFound = RemoteKeycard.Instance.Config.BlacklistedRoles.Contains(player.Role);
           var amnesiaEnabled = RemoteKeycard.Instance.Config.AmnesiaAffectsKeycard; 
           RemoteKeycard.Instance.Config.UseList.TryGetValue("Warhead", out var warheadEnabled);
@@ -239,7 +237,7 @@ public class Events : CustomEventsHandler
           {
                if (RemoteKeycard.Instance.Config.Debug)
                {
-                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Warhead is disabled in config or player is SCP or player has no items or player's role is blacklisted player's or current item is a keycard (DoorEnabled: {warheadEnabled}, IsSCP: {player.IsSCP}, IsWithoutItems: {player.IsWithoutItems}, BlacklistedRole: {blacklistedRoleFound}, CurrentItem: {player.CurrentItem})");
+                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Warhead is disabled in config or player is SCP or player has no items or player's role is blacklisted player's or current item is a keycard (WarheadEnabled: {warheadEnabled}, IsSCP: {player.IsSCP}, IsWithoutItems: {player.IsWithoutItems}, BlacklistedRole: {blacklistedRoleFound}, CurrentItem: {player.CurrentItem})");
                }
                return;
           }
@@ -262,17 +260,23 @@ public class Events : CustomEventsHandler
                }
                return;
           }
+          var existingPanel = Object.FindObjectOfType<AlphaWarheadActivationPanel>();
+          if (existingPanel == null)
+          {
+               Logger.Error("OnPlayerUnlockingWarheadButton(): Could not find Alpha Warhead panel in the scene");
+               return;
+          }
           // Checking if any of the keycards the player owns has permission to open the warhead
-          if (!panel.AnyKeycardHasPermission(player, keycards))
+          if (!existingPanel.AnyKeycardHasPermission(player, keycards))
           { 
                if (RemoteKeycard.Instance.Config.Debug)
                {
                     var keycardNames = keycards.Any() ? string.Join(", ", keycards.Select(k => k.ItemTypeId.ToString())) : "None";
-                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Keycards in player inventory do not have permission to open warhead (KeycardNames: [{keycardNames}], PanelName: {panel.name}, KeycardHasPerms: {panel.AnyKeycardHasPermission(player, keycards)})");
+                    Logger.Debug($"OnPlayerUnlockingWarheadButton(): Keycards in player inventory do not have permission to open warhead (KeycardNames: [{keycardNames}], PanelName: {existingPanel.name}, KeycardHasPerms: {existingPanel.AnyKeycardHasPermission(player, keycards)})");
                }
                return;
           }
-          panel.TryUnlock();
+          existingPanel.TryUnlock();
           args.IsAllowed = false;
      }
 }

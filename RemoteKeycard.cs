@@ -14,7 +14,7 @@ namespace RemoteKeycardLabApi
         public override string Name { get; } = "RemoteKeycard";
         public override string Description { get; } = "Allows you to open doors/lockers and generators withouth holding a card";
         public override string Author { get; } = "sssssssthedev";
-        public override Version Version { get; } = new Version(1, 0, 4);
+        public override Version Version { get; } = new Version(1, 0, 5);
         public override Version RequiredApiVersion { get; } = new (LabApiProperties.CompiledVersion);
         public override LoadPriority Priority { get; } = LoadPriority.High;
         public override string ConfigFileName { get; set; } = "remotekeycard.yml";
